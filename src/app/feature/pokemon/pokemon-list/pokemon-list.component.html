@@ -1,5 +1,5 @@
 <!-- src/app/feature/pokemon/pokemon-list/pokemon-list.component.html -->
-<div class="space-y-4 p-4">
+<div class="flex justify-between items-center p-4">
     <!-- Input and Button to Fetch Pokemon by Total Number -->
     <div class="flex items-center space-x-4">
         <input 
@@ -24,7 +24,7 @@
             (input)="onNameChange($event)" 
             type="text" 
             class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-48" 
-            placeholder="Search Pokemon by Name"
+            placeholder="Search by Name"
         >
         <button 
             (click)="getPokemonByName()" 
