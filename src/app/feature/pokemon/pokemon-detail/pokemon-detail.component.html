@@ -1,0 +1,9 @@
+<!-- src/app/feature/pokemon/pokemon-detail/pokemon-detail.component.html -->
+<div *ngIf="pokemon" class="grid grid-cols-1 gap-4 p-4 border rounded-lg shadow-md bg-white w-52 mx-auto">
+    <img 
+        [src]="pokemon.image" 
+        [alt]="pokemon.name" 
+        class="w-24 h-24 object-contain mb-4 rounded-md mx-auto"
+    />
+    <p class="text-lg font-semibold mb-2 text-center">{{ pokemon.name }}</p>
+</div>

@@ -1,0 +1,81 @@
+<!-- src/app/feature/pokemon/pokemon-list/pokemon-list.component.html -->
+<div class="space-y-4 p-4">
+    <!-- Input and Button to Fetch Pokemon by Total Number -->
+    <div class="flex items-center space-x-4">
+        <input 
+            [value]="totalPokemon" 
+            (input)="onTotalPokemonChange($event)" 
+            type="number" 
+            class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-24" 
+            placeholder="Total Pokemon"
+        >
+        <button 
+            (click)="fetchPokemon()" 
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+            Fetch Pokemon
+        </button>
+    </div>
+
+    <!-- Input and Button to Search Pokemon by Name -->
+    <div class="flex items-center space-x-4">
+        <input 
+            [value]="searchPokemonName" 
+            (input)="onNameChange($event)" 
+            type="text" 
+            class="border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-48" 
+            placeholder="Search Pokemon by Name"
+        >
+        <button 
+            (click)="getPokemonByName()" 
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+            Search
+        </button>
+    </div>
+</div>
+
+<!-- Grid Display for Pokemon Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
+    <div 
+        *ngFor="let item of paginatedPokemon" 
+        class="border rounded-lg shadow-md p-4 bg-white flex flex-col items-center"
+    >
+        <img 
+            [src]="item.image" 
+            [alt]="item.name" 
+            class="w-24 h-24 object-contain mb-4 rounded-md"
+        />
+        <p class="text-lg font-semibold mb-2 text-center">{{ item.name }}</p>
+        <button 
+            (click)="showDetail(item)" 
+            class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+            Detail
+        </button>
+    </div>
+</div>
+
+<!-- Pagination Controls -->
+<div class="grid grid-cols-3 gap-4 p-4 items-center">
+    <button 
+        [disabled]="currentPage === 1" 
+        (click)="previousPage()" 
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+    >
+        Prev
+    </button>
+    <div class="text-center text-sm">
+        Current page: {{ currentPage }} | Total pages: {{ totalPages }} | Total Pokemon: {{ totalPokemon }}
+    </div>
+    <button 
+        [disabled]="currentPage === totalPages" 
+        (click)="nextPage()" 
+        class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+    >
+        Next
+    </button>
+</div>
+
+<!-- Pokemon Detail Component -->
+<app-pokemon-detail [pokemon]="toChild"></app-pokemon-detail>

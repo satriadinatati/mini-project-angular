@@ -1,0 +1,19 @@
+<div class="flex justify-center items-center">
+    <div class="flex items-center border-2 border-gray-500 text-gray-800 p-5 rounded-lg shadow-md">
+        <div>
+            <div class="w-48 h-48 rounded-full bg-gray-500 bg-cover bg-center" style="background-image: url('/profile.png');"></div>
+            <!-- <img src="/profile.png" alt="" class="h-48 mr-5"> -->
+        </div>
+        <div class="text-left ml-5">
+            <h1 class="mb-0 text-xl font-bold">{{profileData.name}}</h1>
+            <span class="text-gray-700">Web Developer, Backend Developer</span>
+            
+            <h3 class="mt-4 mb-0 text-lg font-semibold">Contacts</h3>
+            <p class="mb-1 mt-1 text-sm">Phone: {{profileData.phone}}</p>
+            <p class="mb-1 mt-1 text-sm">Email: {{profileData.email}}</p>
+            
+            <h3 class="mt-4 mb-0 text-lg font-semibold">Hobbies</h3>
+            <span *ngFor="let hobby of profileData.hobbies" class="text-sm">{{hobby | titlecase}}, </span>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,8 @@ import { BrowserModule, provideClientHydration, withEventReplay } from '@angular
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BiodataModule } from './feature/biodata/biodata.module';
+import { PokemonModule } from './feature/pokemon/pokemon.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +12,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BiodataModule,
+    PokemonModule
   ],
   providers: [
     provideClientHydration(withEventReplay())
