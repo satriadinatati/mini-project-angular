@@ -1,0 +1,41 @@
+<!-- Table Data -->
+<div class="mt-10">
+    <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+    <table class="w-full table-auto border-collapse border border-gray-300">
+        <thead>
+            <tr class="bg-gray-100">
+                <th class="border border-gray-300 p-3 text-left">First Name</th>
+                <th class="border border-gray-300 p-3 text-left">Last Name</th>
+                <th class="border border-gray-300 p-3 text-left">Email</th>
+                <th class="border border-gray-300 p-3 text-left">Phone</th>
+                <th class="border border-gray-300 p-3 text-left">Address</th>
+                <th class="border border-gray-300 p-3 text-left">Buy Option</th>
+                <th class="border border-gray-300 p-3 text-left">Pokemon to Buy</th>
+                <th class="border border-gray-300 p-3 text-left">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of buyList">
+                <td class="border border-gray-300 p-3">{{ order.firstName }}</td>
+                <td class="border border-gray-300 p-3">{{ order.lastName }}</td>
+                <td class="border border-gray-300 p-3">{{ order.email }}</td>
+                <td class="border border-gray-300 p-3">{{ order.phoneCountryCode }} {{ order.phone }}</td>
+                <td class="border border-gray-300 p-3">{{ order.address }}</td>
+                <td class="border border-gray-300 p-3">{{ order.buyOption }}</td>
+                <td class="border border-gray-300 p-3">{{ order.pokemonToBuy }}</td>
+                <td class="border border-gray-300 p-3 flex space-x-2">
+                    <button 
+                        class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600" 
+                        (click)="edit(order.id)">
+                        Edit
+                    </button>
+                    <button 
+                        class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600" 
+                        (click)="delete(order.id)">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

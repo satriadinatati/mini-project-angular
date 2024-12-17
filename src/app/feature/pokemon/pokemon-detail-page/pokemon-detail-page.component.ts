@@ -16,6 +16,7 @@ export class PokemonDetailPageComponent implements OnInit {
   pokemonId: string | null = null;
   evolutions: any[] = [];
   evoIndex = 0;
+  showBuyForm = false;
 
   constructor(private pokemonService: PokemonService, private route: ActivatedRoute){}
 
@@ -78,6 +79,11 @@ export class PokemonDetailPageComponent implements OnInit {
     audio.src = this.pokemon.cries.latest;
     audio.load();
     audio.play();
+  }
+
+  toggleBuyForm(){
+    this.showBuyForm = !this.showBuyForm;
+    console.log("ke hit guys");
   }
 
 }

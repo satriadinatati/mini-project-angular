@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { PokemonListComponent } from './pokemon-list/pokemon-list.component';
 import { PokemonDetailComponent } from './pokemon-detail/pokemon-detail.component';
 import { PokemonService } from '../../services/pokemon.service';
 import { PokemonDetailPageComponent } from './pokemon-detail-page/pokemon-detail-page.component';
+import { PokemonFormBuyComponent } from './pokemon-form-buy/pokemon-form-buy.component';
+import { PokemonBuyListComponent } from './pokemon-buy-list/pokemon-buy-list.component';
+import { PokemonFormBuyEditComponent } from './pokemon-form-buy-edit/pokemon-form-buy-edit.component';
 
 
 
@@ -11,10 +15,14 @@ import { PokemonDetailPageComponent } from './pokemon-detail-page/pokemon-detail
   declarations: [
     PokemonListComponent,
     PokemonDetailComponent,
-    PokemonDetailPageComponent
+    PokemonDetailPageComponent,
+    PokemonFormBuyComponent,
+    PokemonBuyListComponent,
+    PokemonFormBuyEditComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   providers: [PokemonService]
 })
