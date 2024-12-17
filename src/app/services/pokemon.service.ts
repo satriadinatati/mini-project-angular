@@ -26,4 +26,10 @@ export class PokemonService {
     const response = await axios.get(`${this.apiUrl}/${name}`);
     return response.data;
   }
+
+  async getPokemonEvolution(url: string){
+    const response = await axios.get(url);
+    return response.data;
+  }
+
 }

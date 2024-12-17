@@ -1,0 +1,79 @@
+<div class="grid grid-cols-2 gap-4 p-6 border rounded-lg shadow-md bg-white w-1/2 mx-auto">
+  
+    <!-- Kolom Kiri -->
+    <div class="flex flex-col items-center justify-center">
+      <img 
+        [src]="pokemon.sprites.front_default"
+        class="w-32 h-32 object-contain mb-4 rounded-md"
+      />
+      <p class="text-xl font-semibold mb-4 text-center">{{ pokemon.name | titlecase }}</p>
+      <button 
+        (click)="playCry()" 
+        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition"
+      >
+        Cries
+      </button>
+    </div>
+    
+    <!-- Kolom Kanan -->
+    <div>
+      <p class="text-lg font-semibold mb-2 text-center">Ability</p>
+      <ul class="text-center space-y-1">
+        <li *ngFor="let ability of pokemon.abilities">{{ ability.ability.name | titlecase }}</li>
+      </ul>
+  
+      <p class="text-lg font-semibold mb-2 text-center">Stats</p>
+      <ul class="space-y-3">
+        <li *ngFor="let stat of pokemon.stats" class="flex flex-col">
+          <span class="font-medium">{{ stat.stat.name }}: {{ stat.base_stat }}</span>
+          <div class="w-full bg-gray-200 rounded-full h-3">
+            <div 
+              class="bg-green-500 h-3 rounded-full transition-all" 
+              [style.width.%]="(stat.base_stat / 100) * 100"
+            ></div>
+          </div>
+        </li>
+      </ul>
+  
+      <p class="text-lg font-semibold mb-2 mt-4 text-center">Evolution</p>
+      <div 
+        class="bg-gray-50 p-3 text-center mb-2 rounded-md" 
+        [ngClass]="{ 'active-evolution': i === evoIndex }" 
+        *ngFor="let evo of evolutions; let i = index"
+      >
+        {{ evo.species.name | titlecase }}
+      </div>
+  
+      <div class="flex justify-between mt-4">
+        <button 
+          (click)="devolvePokemon()" 
+          [ngClass]="{ 'disable-button': evoIndex === 0 }"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+          Devolve
+        </button>
+        <button 
+          (click)="evolvePokemon()"
+          [ngClass]="{ 'disable-button': evoIndex === evolutions.length - 1 }"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+        >
+          Evolve
+        </button>
+      </div>
+    </div>
+  
+  </div>
+  
+  <style>
+    .active-evolution {
+      background-color: #facc15; /* Tailwind yellow-400 */
+      font-weight: bold;
+      border-radius: 8px;
+      transition: all 0.3s ease-in-out;
+    }
+    .disable-button {
+      background-color: #e5e7eb; /* Tailwind gray-200 */
+      cursor: not-allowed;
+    }
+  </style>
+  

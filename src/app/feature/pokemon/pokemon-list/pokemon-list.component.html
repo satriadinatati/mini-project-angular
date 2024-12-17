@@ -39,7 +39,8 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
     <div 
         *ngFor="let item of paginatedPokemon" 
-        class="border rounded-lg shadow-md p-4 bg-white flex flex-col items-center"
+        class="border rounded-lg shadow-md p-4 bg-white flex flex-col items-center cursor-pointer transition-transform transform hover:scale-105 hover:shadow-xl"
+        (click)="showDetail(item)"
     >
         <img 
             [src]="item.image" 
@@ -47,13 +48,26 @@
             class="w-24 h-24 object-contain mb-4 rounded-md"
         />
         <p class="text-lg font-semibold mb-2 text-center">{{ item.name }}</p>
-        <button 
-            (click)="showDetail(item)" 
-            class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
-        >
-            Detail
-        </button>
     </div>
+
+    <!-- Detail Section: Tampilkan detail di bawah kartu yang dipilih -->
+    <ng-container *ngIf="selectedPokemon">
+        <div class="col-span-full border-t border-gray-200 p-4 bg-gray-50">
+            <h2 class="text-2xl font-bold mb-4 text-center">Detail Pokémon</h2>
+            <div class="flex flex-col items-center">
+                <img 
+                    [src]="selectedPokemon.image" 
+                    [alt]="selectedPokemon.name" 
+                    class="w-40 h-40 object-contain mb-4"
+                />
+                <p class="text-xl font-semibold mb-2">{{ selectedPokemon.name }}</p>
+                <p class="text-md mb-2">Type: {{ selectedPokemon.type }}</p>
+                <p class="text-md mb-2">Abilities: {{ selectedPokemon.abilities?.join(', ') }}</p>
+                <p class="text-md mb-2">Weight: {{ selectedPokemon.weight }} kg</p>
+                <p class="text-md mb-2">Height: {{ selectedPokemon.height }} m</p>
+            </div>
+        </div>
+    </ng-container>
 </div>
 
 <!-- Pagination Controls -->
