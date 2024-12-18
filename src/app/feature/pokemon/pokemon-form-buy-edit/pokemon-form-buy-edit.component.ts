@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PokemonService } from '../../../services/pokemon.service';
+import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
+import { CanComponentDeactivate, CanDeactivateGuard } from '../../../guards/can-deactivate.guard';
 
 @Component({
   selector: 'app-pokemon-form-buy-edit',
@@ -11,7 +12,7 @@ import { PokemonService } from '../../../services/pokemon.service';
   templateUrl: './pokemon-form-buy-edit.component.html',
   styleUrl: './pokemon-form-buy-edit.component.css'
 })
-export class PokemonFormBuyEditComponent {
+export class PokemonFormBuyEditComponent implements CanDeactivateGuard {
   id: string | null = null;
   pokemons: any[] = [];
 
@@ -21,6 +22,13 @@ export class PokemonFormBuyEditComponent {
     private route: ActivatedRoute,
     private pokemonService: PokemonService
   ){}
+
+  canDeactivate(component: CanComponentDeactivate): boolean {
+    if (this.buyForm.dirty) {
+      return confirm('Are you sure you want to leave this page?');
+    }
+    return true;
+  }
 
   countryCode = [
     { code: '+62', name: 'ID' },

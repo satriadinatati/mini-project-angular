@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
 import { Router } from '@angular/router';
+import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
 
 @Component({
   selector: 'app-pokemon-form-buy',

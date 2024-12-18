@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
+
 import { Router } from '@angular/router';
+import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
 
 @Component({
   selector: 'app-pokemon-buy-list',
