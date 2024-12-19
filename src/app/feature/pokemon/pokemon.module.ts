@@ -8,6 +8,7 @@ import { PokemonDetailPageComponent } from './pokemon-detail-page/pokemon-detail
 import { PokemonFormBuyComponent } from './pokemon-form-buy/pokemon-form-buy.component';
 import { PokemonBuyListComponent } from './pokemon-buy-list/pokemon-buy-list.component';
 import { PokemonFormBuyEditComponent } from './pokemon-form-buy-edit/pokemon-form-buy-edit.component';
+import { PokemonCartComponent } from './pokemon-cart/pokemon-cart.component';
 
 
 
@@ -18,7 +19,8 @@ import { PokemonFormBuyEditComponent } from './pokemon-form-buy-edit/pokemon-for
     PokemonDetailPageComponent,
     PokemonFormBuyComponent,
     PokemonBuyListComponent,
-    PokemonFormBuyEditComponent
+    PokemonFormBuyEditComponent,
+    PokemonCartComponent
   ],
   imports: [
     CommonModule,

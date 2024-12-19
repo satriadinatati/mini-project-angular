@@ -1,23 +1,34 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RealtimeDatabaseService } from '../../../services/realtime-database.service';
+import { Store } from '@ngrx/store';
+import { selectCartItems } from '../../../state/cart/cart-selector';
+import { PokemonService } from '../../../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-form-buy',
   standalone: false,
-  
   templateUrl: './pokemon-form-buy.component.html',
-  styleUrl: './pokemon-form-buy.component.css'
+  styleUrls: ['./pokemon-form-buy.component.css'] // Perbaikan 'styleUrl' menjadi 'styleUrls'
 })
-export class PokemonFormBuyComponent {
-  @Input() pokemon: any = null;
-  @Input() evolutions: any[] = [];
-  @Output() closeBuyForm = new EventEmitter<void>();
+export class PokemonFormBuyComponent implements OnInit {
+  // Tentukan tipe data lebih jelas
+  selectedPokemons: { pokemon: any, quantity: number, evolutions?: any[] }[] = [];
 
   id: string | null = null;
 
-  constructor(private realtimeDb: RealtimeDatabaseService, private router: Router){}
+  constructor(
+    private realtimeDb: RealtimeDatabaseService,
+    private router: Router,
+    private store: Store,
+    private pokemonService: PokemonService
+  ) {}
+
+  async ngOnInit() {
+    await this.getFromStore();
+    console.log('Selected Pokemons:', this.selectedPokemons);
+  }
 
   countryCode = [
     { code: '+62', name: 'ID' },
@@ -35,24 +46,47 @@ export class PokemonFormBuyComponent {
     pokemonToBuy: new FormControl<string[]>([])
   });
 
-  async onSubmit(){
+  async onSubmit() {
     this.buyForm.markAllAsTouched();
     console.log(this.buyForm.value);
-    if(this.buyForm.invalid){
+    if (this.buyForm.invalid) {
       return;
-    }
-    if(this.buyForm.controls['buyOption'].value === 'current'){
-      this.buyForm.controls['pokemonToBuy'].setValue([this.pokemon.name]); 
-    }else{
-      const allPokemonNames = this.evolutions.map(evo => evo.species?.name || evo.name); 
-      this.buyForm.controls['pokemonToBuy'].setValue(allPokemonNames);
     }
     await this.realtimeDb.saveFormSubmission(this.buyForm.value);
     this.buyForm.reset();
     this.router.navigate(['/list-buy']);
   }
 
-  closeForm(){
-    this.closeBuyForm.emit();
+  /**
+   * Mengambil rantai evolusi untuk semua Pokémon dalam daftar
+   */
+  async getFromStore() {
+    try {
+      const items = this.store.select(selectCartItems);
+      items.subscribe(async (data) => {
+        this.selectedPokemons = data;
+
+        // Menggunakan Promise.all agar semua request dilakukan secara paralel
+        const updatedPokemons = await Promise.all(
+          this.selectedPokemons.map(async (item: any) => {
+            const evolutions = await this.pokemonService.getPokemonEvolutionChain(item.pokemon.id);
+            // Tambahkan properti evolutions ke setiap Pokémon
+            return { ...item, evolutions };
+          })
+        );
+
+        // Perbarui selectedPokemons dengan Pokémon yang memiliki evolusi
+        this.selectedPokemons = updatedPokemons;
+
+        // Mengatur daftar Pokémon yang dipilih ke dalam FormControl
+        this.buyForm.controls['pokemonToBuy'].setValue(
+          this.selectedPokemons.map(item => item.pokemon.name)
+        );
+
+        console.log('Updated Pokemons with Evolutions:', this.selectedPokemons);
+      });
+    } catch (error) {
+      console.error('Error fetching items from store:', error);
+    }
   }
 }

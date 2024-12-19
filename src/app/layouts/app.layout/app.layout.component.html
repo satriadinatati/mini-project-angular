@@ -15,6 +15,9 @@
                 <a routerLink="/list-buy" class="hover:text-gray-400 transition-colors">List Buy</a>
             </li>
             <li>
+                <a routerLink="/cart" class="hover:text-gray-400 transition-colors">Cart</a> {{cartTotal$ | async}}
+            </li>
+            <li>
                 <button type="button" (click)="logout()" class="hover:text-gray-400 transition-colors">Logout</button>
             </li>
         </ul>

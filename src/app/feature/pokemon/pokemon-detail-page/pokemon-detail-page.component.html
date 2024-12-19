@@ -20,6 +20,12 @@
       >
         Buy Card
       </button>
+      <button 
+        (click)="addToCart()" 
+        class="bg-green-500 text-white mt-2 px-6 py-2 rounded-lg hover:bg-green-600 transition"
+      >
+        Add to Cart
+      </button>
     </div>
     
     <!-- Kolom Kanan -->
@@ -68,19 +74,6 @@
         </button>
       </div>
     </div>
-  
-    <!-- Form Pembelian (Slide In) -->
-    <div 
-      class="fixed top-0 right-0 h-full bg-white w-1/3 p-6 shadow-lg border-l transition-transform transform overflow-y-auto max-h-screen"
-      [ngClass]="{ 'translate-x-0': showBuyForm, 'translate-x-full': !showBuyForm }"
-    >
-    <app-pokemon-form-buy
-        [pokemon]="pokemon"
-        [evolutions]="evolutions"
-        (closeBuyForm)="toggleBuyForm()"
-    ></app-pokemon-form-buy>
-    </div>
-  </div>
   
   <style>
     .active-evolution {

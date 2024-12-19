@@ -3,6 +3,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PokemonService } from '../../../services/pokemon.service';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { addToCart } from '../../../state/cart/cart-action';
+import { selectCartItems } from '../../../state/cart/cart-selector';
 
 @Component({
   selector: 'app-pokemon-detail-page',
@@ -18,7 +21,11 @@ export class PokemonDetailPageComponent implements OnInit {
   evoIndex = 0;
   showBuyForm = false;
 
-  constructor(private pokemonService: PokemonService, private route: ActivatedRoute){}
+  constructor(
+    private pokemonService: PokemonService, 
+    private route: ActivatedRoute,
+    private store: Store
+  ){}
 
   async ngOnInit() {
     this.pokemonId = this.route.snapshot.paramMap.get('id');
@@ -84,6 +91,13 @@ export class PokemonDetailPageComponent implements OnInit {
   toggleBuyForm(){
     this.showBuyForm = !this.showBuyForm;
     console.log("ke hit guys");
+  }
+
+  addToCart(){
+    const cartItem = {pokemon: this.pokemon, quantity: 1};
+    alert(`Pokemon ${this.pokemon.name} added to cart`);
+    this.store.dispatch(addToCart(cartItem));
+    console.log("cartItem", this.store.select(selectCartItems));
   }
 
 }

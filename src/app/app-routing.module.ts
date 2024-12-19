@@ -10,7 +10,8 @@ import { RegisterComponent } from './feature/auth/register/register.component';
 import { AppLayoutComponent } from './layouts/app.layout/app.layout.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CanDeactivateGuard } from './guards/can-deactivate.guard';
-import path from 'path';
+import { PokemonCartComponent } from './feature/pokemon/pokemon-cart/pokemon-cart.component';
+import { PokemonFormBuyComponent } from './feature/pokemon/pokemon-form-buy/pokemon-form-buy.component';
 
 const routes: Routes = [
   { path: 'auth/login', component: LoginComponent },
@@ -20,12 +21,15 @@ const routes: Routes = [
   {
     path: '',
     component: AppLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: '', component: BiodataComponent, canActivate: [AuthGuard] },
-      { path: 'pokemon', component: PokemonListComponent, canActivate: [AuthGuard] },
-      { path: 'pokemon/:id', component: PokemonDetailPageComponent, canActivate: [AuthGuard] },
-      { path: "list-buy", component: PokemonBuyListComponent, canActivate: [AuthGuard] },
-      { path: "list-buy/edit/:id", component: PokemonFormBuyEditComponent, canActivate: [AuthGuard], canDeactivate: [CanDeactivateGuard] }
+      { path: '', component: BiodataComponent },
+      { path: 'pokemon', component: PokemonListComponent },
+      { path: 'pokemon/:id', component: PokemonDetailPageComponent },
+      { path: "list-buy", component: PokemonBuyListComponent },
+      { path: "list-buy/edit/:id", component: PokemonFormBuyEditComponent, canDeactivate: [CanDeactivateGuard] },
+      { path: "cart", component: PokemonCartComponent },
+      { path: "cart/checkout", component: PokemonFormBuyComponent }
     ]
 
   },

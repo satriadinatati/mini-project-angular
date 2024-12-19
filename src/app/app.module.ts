@@ -13,7 +13,9 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { AuthModule } from './feature/auth/auth.module';
 import { LayoutsModule } from './layouts/layouts.module';
-import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { cartReducer } from './state/cart/cart-reducer';
+import { run } from 'node:test';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,16 @@ import { RouterModule } from '@angular/router';
     BiodataModule,
     PokemonModule,
     AuthModule,
-    LayoutsModule
+    LayoutsModule,
+    StoreModule.forRoot(
+      {cart: cartReducer},
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true
+        }
+      }
+    ),
   ],
   providers: [
     provideClientHydration(withEventReplay()),
